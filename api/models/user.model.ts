@@ -1,9 +1,9 @@
 import { Model, Table, AutoIncrement, PrimaryKey, Column, AllowNull, NotEmpty } from "sequelize-typescript";
 
-export interface UserI{
+export interface IUser{
     id?: number | null
-    first_name: string
-    last_name: string
+    firstName: string
+    lastName: string
     email: string
     password: string
 }
@@ -14,7 +14,7 @@ export interface UserI{
         timestamps: true
     }
 )
-export default class User extends Model implements UserI{
+export default class User extends Model implements IUser{
     
     @AutoIncrement
     @PrimaryKey
@@ -24,12 +24,12 @@ export default class User extends Model implements UserI{
     @AllowNull(false)
     @NotEmpty
     @Column
-    first_name!: string
+    firstName!: string
 
     @AllowNull(false)
     @NotEmpty
     @Column
-    last_name!: string;
+    lastName!: string;
 
     @AllowNull(false)
     @NotEmpty
