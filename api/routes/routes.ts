@@ -6,6 +6,6 @@ export class Routes {
 
   public routes(app:any): void {
 
-    app.route("/user").get(this.userController.getUser);
+    app.route("/user").get(this.userController.getAllUsers);
   }
 }
