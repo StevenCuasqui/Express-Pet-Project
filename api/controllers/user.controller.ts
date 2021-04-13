@@ -1,35 +1,46 @@
-import e, { Request, Response } from "express";
-import User from "../models/user.model";
+import User, { IUser } from "../models/user.model";
 // Supertest para Integracion Test
 //Logica de Negocio aquí -> Separar en capa "Interaccion/Conexion con la BD"
 
-export class UserController {
-  public async getAllUsers(req: Request, res: Response) {
+export class UserController{
+  // constructor(conexion:Conexion){
+  // }
+  public async getAllUsers() {
     const users = await User.findAll()
-    res.json(users)
+    return users
   }
 
-  public async createUser(req:Request, res: Response){
-    const params = req.body
-    const firstName = params.firstName;
-    const lastName = params.lastName;
-    const email = params.email;
-    const password = params.password;
+  // //absctarct Conexion.ts 
+  // @get()
 
-    console.log(params)
+  // //ConexionBD.ts extends AbsstarctConexion.ts
 
-    const user = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password
-    }
+  // get(model:Model){
 
+  //   const respnose = model.findAll()
+  //   return response;
+  // }
+
+  // //ConexionMock.ts extends AbstractConexion.ts
+  // get(model:Model){
+
+  //   const respnose = {
+  //     fa:'fadfa'
+  //   }
+  //   return response;
+  // }
+
+  public getUserByLastName(lastNameOfUser:string){
+
+  }
+
+
+  public getUserByAge(lastNameOfUser:string){
+
+  }
+
+  public async createUser(user:IUser){
     const newUser = await User.create(user)
-
-    res.json({
-      message: "Usuario creado con éxito!",
-      user: newUser
-    })
+    return newUser
   }
 }
