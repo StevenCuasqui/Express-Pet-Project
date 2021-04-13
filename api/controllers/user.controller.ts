@@ -5,7 +5,7 @@ import User, { IUser } from "../models/user.model";
 export class UserController{
   // constructor(conexion:Conexion){
   // }
-  public async getAllUsers() {
+    async getAllUsers() {
     const users = await User.findAll()
     return users
   }
@@ -39,8 +39,25 @@ export class UserController{
 
   }
 
-  public async createUser(user:IUser){
+  
+    async createUser(user:IUser){
     const newUser = await User.create(user)
     return newUser
+  }
+
+
+  async deleteUser(userId:number){
+    const userElimination = await User.destroy({where: {id: userId}})
+  }
+
+  async editUser(userId:number, editUser:IUser){
+    const updateUser = await User.update({
+      firstName: editUser.firstName,
+      lastName: editUser.lastName,
+      email: editUser.email,
+      password: editUser.password
+    },{
+      where: {id: userId}
+    });
   }
 }
