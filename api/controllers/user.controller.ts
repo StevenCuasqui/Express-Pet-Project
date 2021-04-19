@@ -1,4 +1,5 @@
 import User, { IUser } from "../models/user.model";
+import bcrypt from 'bcrypt';
 // Supertest para Integracion Test
 //Logica de Negocio aquí -> Separar en capa "Interaccion/Conexion con la BD"
 
@@ -41,8 +42,14 @@ export class UserController{
 
   
     async createUser(user:IUser){
-    const newUser = await User.create(user)
-    return newUser
+      const hashPassword = await this.hashPassword(user.password);
+
+      if(hashPassword) {
+        user.password = hashPassword;
+      }
+
+      const newUser = await User.create(user)
+      return newUser
   }
 
 
@@ -60,4 +67,12 @@ export class UserController{
       where: {id: userId}
     });
   }
+
+  private async hashPassword(password: string): Promise<string | void>{
+    const hashPassword = bcrypt.hash(password, 10,).then((hash) =>{
+        return hash;
+    }).catch((error) => console.log(error));
+    return hashPassword;
+  }
+
 }
